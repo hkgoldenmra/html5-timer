@@ -4,17 +4,11 @@
 		<title>Mr.A HTML5 Timer 0.1</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<script type="text/javascript" src="functions.js"></script>
-		<script type="text/javascript" src="checkpoints/bio-hazard-2-leon-a.js"></script>
-		<script type="text/javascript">
-//<!--
-var checkpoints = checkpointBH2LeonA;
-//-->
-		</script>
 	</head>
 	<body onkeydown="submitCheckpointOnBody(event);" style="background-color: #000000;">
 		<input id="start" style="font-family: 'Courier New';" type="button" value="Start" onclick="startOrPauseTimer(this);"/>
 		<input type="button" style="font-family: 'Courier New';" value="Reset" onclick="resetTimer(); loadCheckpoint();"/>
-		<input type="button" style="font-family: 'Courier New';" value="Check" onclick="submitCheckpoint();"/>
+		<input type="button" style="font-family: 'Courier New';" value="Check (or press ESC)" onclick="submitCheckpoint();"/>
 		<label for="format"style="color: #ffffff; font-weight: bold;">Display format:</label> <select id="format" onchange="window.location.href = '?' + this.value">
 			<option value="showh=1&showms=1">HH:MM:SS.sss</option>
 			<option value="showh=1&showms=0">HH:MM:SS</option>
@@ -22,22 +16,40 @@ var checkpoints = checkpointBH2LeonA;
 			<option value="showh=0&showms=0">MM:SS</option>
 		</select>
 		<hr/>
-		<div id="timerString" style="color: #ffffff; font-weight: bold; font-family: 'Courier New';"></div>
-		<table id="checkpointTable" style="font-family: 'Courier New'; color: #ffffff; border-collapse: collapse; white-space: nowrap;" cellpadding="5" border="1">
-			<thead>
-				<tr>
-					<th>index</th>
-					<th>target time</th>
-					<th>current time</th>
-					<th>compared time</th>
-				</tr>
-			</thead>
+		<table cellpadding="10">
 			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<tr valign="top">
+					<td>
+<div id="timerString" style="color: #ffffff; font-weight: bold; font-family: 'Courier New'; padding-top: 10px; padding-bottom: 10px;"></div>
+<table id="checkpointTable" style="font-family: 'Courier New'; color: #ffffff; border-collapse: collapse; white-space: nowrap;" cellpadding="5" border="1">
+	<thead>
+		<tr>
+			<th>index</th>
+			<th>target time</th>
+			<th>current time</th>
+			<th>compared time</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
+					</td>
+					<td>
+						<div style="color: #ffffff; font-weight: bold; padding-top: 10px; padding-bottom: 10px;">Use JSON to construct a checkpoint table</div>
+						<div><textarea id="json" rows="20" cols="80">[
+	{"title": "checkpoint 1", "h": 1, "m": 2, "s": 3, "ms": 4},
+	{"title": "checkpoint 2", "h": 4, "m": 5, "s": 6, "ms": 7},
+	{"title": "checkpoint 3", "h": 7, "m": 8, "s": 9, "ms": 10}
+]</textarea></div>
+						<div><input type="button" value="submit" onclick="resetTimer(); loadCheckpoint();"/>
+						<span id="error" style="color: #ffffff; font-weight: bold;"></span></div>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -45,6 +57,16 @@ var checkpoints = checkpointBH2LeonA;
 //<!--
 resetTimer();
 loadCheckpoint();
+var format = document.getElementById('format');
+if (showHours && showMilliseconds){
+	format.options[0].selected = true;
+} else if (showHours && !showMilliseconds){
+	format.options[1].selected = true;
+} else if (!showHours && showMilliseconds){
+	format.options[2].selected = true;
+} else if (!showHours && !showMilliseconds){
+	format.options[3].selected = true;
+}
 //-->
 		</script>
 	</body>
