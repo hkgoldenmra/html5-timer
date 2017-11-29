@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mr.A HTML5 Timer 0.1</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<script type="text/javascript" src="functions.js"></script>
+		<script type="text/javascript" src="checkpoints/bio-hazard-2-leon-a.js"></script>
+		<script type="text/javascript">
+//<!--
+var checkpoints = checkpointBH2LeonA;
+//-->
+		</script>
+	</head>
+	<body onkeydown="submitCheckpointOnBody(event);" style="background-color: #000000;">
+		<input id="start" style="font-family: 'Courier New';" type="button" value="Start" onclick="startOrPauseTimer(this);"/>
+		<input type="button" style="font-family: 'Courier New';" value="Reset" onclick="resetTimer(); loadCheckpoint();"/>
+		<input type="button" style="font-family: 'Courier New';" value="Check" onclick="submitCheckpoint();"/>
+		<label for="format"style="color: #ffffff; font-weight: bold;">Display format:</label> <select id="format" onchange="window.location.href = '?' + this.value">
+			<option value="showh=1&showms=1">HH:MM:SS.sss</option>
+			<option value="showh=1&showms=0">HH:MM:SS</option>
+			<option value="showh=0&showms=1">MM:SS.sss</option>
+			<option value="showh=0&showms=0">MM:SS</option>
+		</select>
+		<hr/>
+		<div id="timerString" style="color: #ffffff; font-weight: bold; font-family: 'Courier New';"></div>
+		<table id="checkpointTable" style="font-family: 'Courier New'; color: #ffffff; border-collapse: collapse; white-space: nowrap;" cellpadding="5" border="1">
+			<thead>
+				<tr>
+					<th>index</th>
+					<th>target time</th>
+					<th>current time</th>
+					<th>compared time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript">
+//<!--
+resetTimer();
+loadCheckpoint();
+//-->
+		</script>
+	</body>
+</html>
