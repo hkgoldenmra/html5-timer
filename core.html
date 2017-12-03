@@ -41,12 +41,10 @@
 </table>
 					</td>
 					<td>
-						<div style="color: #ffffff; font-weight: bold; padding-top: 10px; padding-bottom: 10px;">Use JSON to construct a checkpoint table</div>
-						<div><textarea id="json" rows="20" cols="80">[
-	{"title": "checkpoint 1", "h": 1, "m": 2, "s": 3, "ms": 4},
-	{"title": "checkpoint 2", "h": 4, "m": 5, "s": 6, "ms": 7},
-	{"title": "checkpoint 3", "h": 7, "m": 8, "s": 9, "ms": 10}
-]</textarea></div>
+						<div style="color: #ffffff; font-weight: bold; padding-top: 10px; padding-bottom: 10px;">Use CSV to construct a checkpoint table</div>
+						<div><textarea id="data" rows="20" cols="80">1,2,3,4,checkpoint 1
+4,5,6,7,checkpoint 2
+7,8,9,10,checkpoint 3</textarea></div>
 						<div><input type="button" value="submit" onclick="resetTimer(); loadCheckpoint();"/>
 						<span id="error" style="color: #ffffff; font-weight: bold;"></span></div>
 					</td>
