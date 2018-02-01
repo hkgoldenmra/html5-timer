@@ -1,13 +1,15 @@
 var showHours = true;
 var showMilliseconds = true;
 var fields = window.location.href.split('?');
-fields = fields[1].split('&');
-for (var i in fields){
-	var params = fields[i].split('=');
-	if (params[0] == 'showh'){
-		showHours = params[1] == 1;
-	} else if (params[0] == 'showms'){
-		showMilliseconds = params[1] == 1;
+if (fields.length > 2){
+	fields = fields[1].split('&');
+	for (var i in fields){
+		var params = fields[i].split('=');
+		if (params[0] == 'showh'){
+			showHours = (params[1] == 1);
+		} else if (params[0] == 'showms'){
+			showMilliseconds = (params[1] == 1);
+		}
 	}
 }
 
@@ -27,7 +29,8 @@ function loadCheckpoint(jsonString){
 	try{
 		var checkpoints = document.getElementById('data').value.split("\n");
 		for (var i in checkpoints){
-			var checkpoint = checkpoints[i].split(',', 5);
+			var checkpoint = checkpoints[i];
+			checkpoint = checkpoint.split(',', 5);
 			var tr = tbody.insertRow(-1);
 			tr.id = 'currentTimer' + i;
 //
@@ -122,16 +125,16 @@ function updateStatus(){
 			var checkpoints = document.getElementById('data').value.split("\n");
 			frames++;
 //
-			var currentMilliseconds = Math.floor(frames * 1000 / 60);
+			var currentMilliseconds = Math.floor(frames / 60 * 1000);
 			var currentSeconds = Math.floor(currentMilliseconds / 1000);
 			var currentMinutes = Math.floor(currentSeconds / 60);
-			var currentHours = Math.floor(currentMinutes / 24);
+			var currentHours = Math.floor(currentMinutes / 60);
 			var originalMilliseconds = currentMilliseconds;
 //
 			currentMilliseconds %= 1000;
 			currentSeconds %= 60;
 			currentMinutes %= 60;
-//		currentHours %= 24;
+//			currentHours %= 24;
 //
 			var currentSecondString = padZero(currentSeconds, 2);
 			var currentMinuteString = padZero(currentMinutes, 2);
