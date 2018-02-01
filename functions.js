@@ -27,7 +27,7 @@ function loadCheckpoint(jsonString){
 	try{
 		var checkpoints = document.getElementById('data').value.split("\n");
 		for (var i in checkpoints){
-			var checkpoint = checkpoints[i].split(',', 5);
+			var checkpoint = checkpoints[i].split(/[, 	]/, 5);
 			var tr = tbody.insertRow(-1);
 			tr.id = 'currentTimer' + i;
 //
