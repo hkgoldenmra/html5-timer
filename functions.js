@@ -1,3 +1,4 @@
+var regexDelimiters = /[, 	]/;
 var showHours = true;
 var showMilliseconds = true;
 var fields = window.location.href.split('?');
@@ -27,60 +28,63 @@ function loadCheckpoint(jsonString){
 		tbody.deleteRow(0);
 	}
 	try{
-		var checkpoints = document.getElementById('data').value.split("\n");
-		for (var i in checkpoints){
-			var checkpoint = checkpoints[i];
-			checkpoint = checkpoint.split(',', 5);
-			var tr = tbody.insertRow(-1);
-			tr.id = 'currentTimer' + i;
+		var data = document.getElementById('data').value;
+		if (data.trim().length > 0){
+			var checkpoints = document.getElementById('data').value.split("\n");
+			for (var i in checkpoints){
+				var checkpoint = checkpoints[i].trim();
+				checkpoint = checkpoint.split(regexDelimiters, 5);
+				var tr = tbody.insertRow(-1);
+				tr.id = 'currentTimer' + i;
 //
-			var td = tr.insertCell(-1);
-			td.align = 'right';
-			var title = checkpoint[4];
-			if (title == undefined){
-				td.innerHTML = i;
-			} else {
-				td.innerHTML = title;
-			}
-//
-			td = tr.insertCell(-1);
-			td.align = 'right';
-			var seconds = parseInt(checkpoint[2]);
-			if (seconds == undefined || isNaN(seconds)){
-				seconds = 0;
-			}
-			var minutes = parseInt(checkpoint[1]);
-			if (minutes == undefined || isNaN(minutes)){
-				minutes = 0;
-			}
-			var secondString = padZero(seconds, 2);
-			var minuteString = padZero(minutes, 2);
-			var string = minuteString + ':' + secondString;
-			if (showHours){
-				var hours = parseInt(checkpoint[0]);
-				if (hours == undefined || isNaN(hours)){
-					hours = 0;
+				var td = tr.insertCell(-1);
+				td.align = 'right';
+				var title = checkpoint[4];
+				if (title == undefined){
+					td.innerHTML = i;
+				} else {
+					td.innerHTML = title;
 				}
-				var hourString = padZero(hours, 2);
-				string = hourString + ':' + string;
-			}
-			if (showMilliseconds){
-				var milliseconds = parseInt(checkpoint[3]);
-				if (milliseconds == undefined || isNaN(milliseconds)){
-					milliseconds = 0;
+//
+				td = tr.insertCell(-1);
+				td.align = 'right';
+				var seconds = parseInt(checkpoint[2]);
+				if (seconds == undefined || isNaN(seconds)){
+					seconds = 0;
 				}
-				var millisecondString = padZero(milliseconds, 3);
-				string += '.' + millisecondString;
+				var minutes = parseInt(checkpoint[1]);
+				if (minutes == undefined || isNaN(minutes)){
+					minutes = 0;
+				}
+				var secondString = padZero(seconds, 2);
+				var minuteString = padZero(minutes, 2);
+				var string = minuteString + ':' + secondString;
+				if (showHours){
+					var hours = parseInt(checkpoint[0]);
+					if (hours == undefined || isNaN(hours)){
+						hours = 0;
+					}
+					var hourString = padZero(hours, 2);
+					string = hourString + ':' + string;
+				}
+				if (showMilliseconds){
+					var milliseconds = parseInt(checkpoint[3]);
+					if (milliseconds == undefined || isNaN(milliseconds)){
+						milliseconds = 0;
+					}
+					var millisecondString = padZero(milliseconds, 3);
+					string += '.' + millisecondString;
+				}
+				td.innerHTML = string;
+//
+				td = tr.insertCell(-1);
+				td.align = 'right';
+				td.id = 'currentTime' + i;
+//
+				td = tr.insertCell(-1);
+				td.align = 'right';
+				td.id = 'comparedTime' + i;
 			}
-			td.innerHTML = string;
-//
-			td = tr.insertCell(-1);
-			td.align = 'right';
-			td.id = 'currentTime' + i;
-//
-			td = tr.insertCell(-1);
-			td.align = 'right';
-			td.id = 'comparedTime' + i;
 		}
 	} catch (ex){
 		error.innerHTML = ex.toString();
@@ -157,7 +161,7 @@ function updateStatus(){
 				}
 			}
 			for (var i = checkpointIndex; i < checkpoints.length; i++){
-				var checkpoint = checkpoints[i].split(',', 5);
+				var checkpoint = checkpoints[i].split(regexDelimiters, 5);
 				var milliseconds = parseInt(checkpoint[3]);
 				if (milliseconds == undefined || isNaN(milliseconds)){
 					milliseconds = 0;
