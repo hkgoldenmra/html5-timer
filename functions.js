@@ -1,4 +1,5 @@
 var regexDelimiters = /[, 	]/;
+var regexReplace = /^([^, 	]*[, 	]){4}/;
 var showHours = true;
 var showMilliseconds = true;
 var fields = window.location.href.split('?');
@@ -32,8 +33,9 @@ function loadCheckpoint(jsonString){
 		if (data.trim().length > 0){
 			var checkpoints = document.getElementById('data').value.split("\n");
 			for (var i in checkpoints){
-				var checkpoint = checkpoints[i].trim();
-				checkpoint = checkpoint.split(regexDelimiters, 5);
+				checkpoints[i] = checkpoints[i].trim();
+				var checkpoint = checkpoints[i].split(regexDelimiters, 4);
+				checkpoint.push(checkpoints[i].replace(/^([^, 	]*[, 	]){4}/, ''));
 				var tr = tbody.insertRow(-1);
 				tr.id = 'currentTimer' + i;
 //
@@ -161,7 +163,9 @@ function updateStatus(){
 				}
 			}
 			for (var i = checkpointIndex; i < checkpoints.length; i++){
-				var checkpoint = checkpoints[i].split(regexDelimiters, 5);
+				checkpoints[i] = checkpoints[i].trim();
+				var checkpoint = checkpoints[i].split(regexDelimiters, 4);
+				checkpoint.push(checkpoints[i].replace(/^([^, 	]*[, 	]){4}/, ''));
 				var milliseconds = parseInt(checkpoint[3]);
 				if (milliseconds == undefined || isNaN(milliseconds)){
 					milliseconds = 0;
