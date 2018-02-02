@@ -2,7 +2,7 @@ var regexDelimiters = /[, 	]/;
 var showHours = true;
 var showMilliseconds = true;
 var fields = window.location.href.split('?');
-if (fields.length > 2){
+if (fields.length > 1){
 	fields = fields[1].split('&');
 	for (var i in fields){
 		var params = fields[i].split('=');
