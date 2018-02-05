@@ -20,7 +20,7 @@
 		<input id="start" style="font-family: 'Courier New';" type="button" value="Start" onclick="startOrPauseTimer(this);"/>
 		<input type="button" style="font-family: 'Courier New';" value="Reset" onclick="resetTimer(); loadCheckpoint();"/>
 		<input type="button" style="font-family: 'Courier New';" value="Check (or press ESC)" onclick="submitCheckpoint();"/>
-		<label for="format" style="color: #ffffff; font-weight: bold;">Display format:</label> <select id="format" onchange="window.location.href = '?' + this.value">
+		<label for="format" style="color: #ffffff;">Display format:</label> <select id="format" style="font-family: 'Courier New';" onchange="window.location.href = '?' + this.value">
 			<option value="showh=1&amp;showms=1">HH:MM:SS.sss</option>
 			<option value="showh=1&amp;showms=0">HH:MM:SS</option>
 			<option value="showh=0&amp;showms=1">MM:SS.sss</option>

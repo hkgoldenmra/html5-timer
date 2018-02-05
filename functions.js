@@ -21,13 +21,13 @@ function loadCheckpoint(){
 	error.innerHTML = '';
 	var table = document.getElementById('checkpointTable');
 	var tbody = table.getElementsByTagName('tbody');
-	tbody = tbody[0];
+	tbody = tbody.item(0);
 	while (tbody.rows.length > 0){
 		tbody.deleteRow(0);
 	}
 	var resultTable = document.getElementById('resultTable');
 	var resultTbody = resultTable.getElementsByTagName('tbody');
-	resultTbody = resultTbody[0];
+	resultTbody = resultTbody.item(0);
 	while (resultTbody.rows.length > 0){
 		resultTbody.deleteRow(0);
 	}
@@ -93,7 +93,7 @@ function loadCheckpoint(){
 			}
 		}
 	} catch (ex){
-		error.innerHTML = ex.toString();
+		error.innerHTML = ex.lineNumber + ': ' + ex.toString();
 	}
 }
 
@@ -159,7 +159,7 @@ function updateStatus(){
 
 			var table = document.getElementById('checkpointTable');
 			var tbody = table.getElementsByTagName('tbody');
-			var trs = tbody[0].rows;
+			var trs = tbody.item(0).rows;
 			for (var i = 0; i < trs.length; i++){
 				var targetMilliseconds = 0;
 				var tr = trs[i];
@@ -184,7 +184,7 @@ function updateStatus(){
 					targetMilliseconds += parseInt(field0[1]) * 1000;
 					targetMilliseconds += parseInt(field1[1]);
 				} else {
-					var field0 = field1[0].split(':');
+					var field0 = targetTime.split(':');
 					targetMilliseconds += parseInt(field0[0]) * 60000;
 					targetMilliseconds += parseInt(field0[1]) * 1000;
 				}
@@ -221,6 +221,7 @@ function updateStatus(){
 }
 
 function submitCheckpointOnBody(event){
+	// KeyEvent.DOM_VK_ESCAPE
 	if (event.keyCode == 27){
 		submitCheckpoint();
 	}
@@ -229,15 +230,15 @@ function submitCheckpointOnBody(event){
 function submitCheckpoint(){
 	var table = document.getElementById('checkpointTable');
 	var tbody = table.getElementsByTagName('tbody');
-	tbody = tbody[0];
+	tbody = tbody.item(0);
 	var resultTable = document.getElementById('resultTable');
 	var resultTbody = resultTable.getElementsByTagName('tbody');
-	resultTbody = resultTbody[0];
+	resultTbody = resultTbody.item(0);
 	if (tbody.rows.length > 0){
-		var tr = tbody.rows[0].cloneNode(true);
+		var tr = tbody.rows.item(0).cloneNode(true);
 		var tds = tr.getElementsByTagName('td');
 		for (var i in tds){
-			tds[i].id = null;
+			tds.item(i).removeAttribute('id');
 		}
 		resultTbody.appendChild(tr);
 		tbody.deleteRow(0);
