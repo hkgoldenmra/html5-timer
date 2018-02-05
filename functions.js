@@ -210,6 +210,7 @@ function updateStatus(){
 					comparedString += '.' + comparedMillisecondString;
 				}
 
+				tr.style.color = (isNegative ? '#ff0000' : '#00ff00');
 				document.getElementById('comparedTime' + id).innerHTML = (isNegative ? '+' : '-') + comparedString;
 				document.getElementById('currentTime' + id).innerHTML = currentString;
 			}
