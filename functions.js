@@ -37,28 +37,30 @@ function loadCheckpoint(){
 			var checkpoints = data.trim().split("\n");
 			for (var i in checkpoints){
 				checkpoints[i] = checkpoints[i].trim();
-				var checkpoint = checkpoints[i].split(/[, 	]/, 4);
-				checkpoint.push(checkpoints[i].replace(/^([^, 	]*[, 	]){4}/, ''));
+				var checkpoint = checkpoints[i].split(/[, 	]/, 1);
+				checkpoint.push(checkpoints[i].replace(/^([^, 	]*[, 	]){1}/, ''));
 				var tr = tbody.insertRow(-1);
 				tr.id = 'checkpoint' + i;
 
 				var td = tr.insertCell(-1);
 				td.align = 'right';
-				var title = checkpoint[4];
+				var title = checkpoint[1];
 				if (title == undefined){
 					td.innerHTML = i;
 				} else {
 					td.innerHTML = title;
 				}
+				var fields = checkpoint[0].split('.');
+				var primaries = fields[0].split(':');
 
 				td = tr.insertCell(-1);
 				td.id = 'targetTime' + i;
 				td.align = 'right';
-				var seconds = parseInt(checkpoint[2]);
+				var seconds = parseInt(primaries[2]);
 				if (seconds == undefined || isNaN(seconds)){
 					seconds = 0;
 				}
-				var minutes = parseInt(checkpoint[1]);
+				var minutes = parseInt(primaries[1]);
 				if (minutes == undefined || isNaN(minutes)){
 					minutes = 0;
 				}
@@ -66,7 +68,7 @@ function loadCheckpoint(){
 				var minuteString = padZero(minutes, 2);
 				var string = minuteString + ':' + secondString;
 				if (showHours){
-					var hours = parseInt(checkpoint[0]);
+					var hours = parseInt(primaries[0]);
 					if (hours == undefined || isNaN(hours)){
 						hours = 0;
 					}
@@ -74,7 +76,7 @@ function loadCheckpoint(){
 					string = hourString + ':' + string;
 				}
 				if (showMilliseconds){
-					var milliseconds = parseInt(checkpoint[3]);
+					var milliseconds = parseInt(fields[1]);
 					if (milliseconds == undefined || isNaN(milliseconds)){
 						milliseconds = 0;
 					}
